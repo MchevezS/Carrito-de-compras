@@ -1,6 +1,11 @@
 let carrito = [];
 let total = 0;
 
+// Funcion para guardar el carrito en localStorage
+function guardarCarritoEnLocalStorage() {
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Cargar el carrito desde localStorage si existe
     cargarCarritoDesdeLocalStorage();
@@ -24,6 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function agregarAlCarrito(nombre, precio) {
     const producto = { nombre, precio };
     carrito.push(producto);
+    guardarCarritoEnLocalStorage();
+    actualizarCarrito();
+}
+
+// Funcion para eliminar un producto del carrito por su indice //  Parametro que le agregue 
+function eliminarDelCarrito(indice) {
+    carrito.splice(indice, 1);
     guardarCarritoEnLocalStorage();
     actualizarCarrito();
 }
