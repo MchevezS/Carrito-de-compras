@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             alert('Por favor ingresa un nombre válido y un precio mayor a 0.');
         }
-        window.location.href=window.location.href
+        window.location.href=window.location.href // Se refresca /o se actuliza la pagina por si sola
     });
     
 });
@@ -39,3 +39,34 @@ function eliminarDelCarrito(indice) {
     guardarCarritoEnLocalStorage();
     actualizarCarrito();
 }
+
+// Funcion para actualizar el contenido del carrito en la pagina- // P// Hice que mis productos se puedan eliminar   // Se suman todos los precios de los productos
+function actualizarCarrito() {
+    const carritoDiv = document.getElementById('carrito');
+    carritoDiv.innerHTML = '';
+    total = 0;
+
+    carrito.forEach((item, index) => {
+        carritoDiv.innerHTML += `
+                                         
+            <p>
+                ${item.nombre} - $${item.precio.toFixed(2)} 
+                <button onclick="eliminarDelCarrito(${index})">Eliminar</button>
+            </p>
+        `;
+        total += item.precio; 
+    });
+
+    document.getElementById('total').innerText = total.toFixed(2);
+}
+
+
+// Función para cargar el carrito desde localStorage
+function cargarCarritoDesdeLocalStorage() {
+    const carritoGuardado = localStorage.getItem('carrito');
+    if (carritoGuardado) {
+        carrito = JSON.parse(carritoGuardado);
+        actualizarCarrito();
+    }
+}
+
